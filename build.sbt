@@ -16,6 +16,19 @@ mergeStrategy in assembly := {
   //case _ => MergeStrategy.first
 }
 
+/*
+[warn] Scala version was updated by one of library dependencies:
+[warn]  * org.scala-lang:scala-compiler:2.10.0 -> 2.10.4
+[warn] To force scalaVersion, add the following:
+[warn]  ivyScala := ivyScala.value map { _.copy(overrideScalaVersion = true) }
+[warn] Run 'evicted' to see detailed eviction warnings
+
+*/
+ivyScala := ivyScala.value map { _.copy(overrideScalaVersion = true) }
+
+// dependency-tree
+net.virtualvoid.sbt.graph.Plugin.graphSettings
+
 organization  := "com.classcat"
 
 version       := "0.1"
@@ -44,3 +57,5 @@ libraryDependencies ++= {
 }
 
 Revolver.settings
+
+Twirl.settings
