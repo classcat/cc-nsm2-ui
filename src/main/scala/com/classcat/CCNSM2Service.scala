@@ -27,19 +27,26 @@ class CCNSM2ServiceActor extends Actor with CCNSM2Service {
 
 // this trait defines our service behavior independently from the service actor
 trait CCNSM2Service extends HttpService {
-    val prop = new java.util.Properties()
+    /*
     try {
+        val prop = new java.util.Properties()
         prop.load(new java.io.FileInputStream("/usr/local/ccnsm2/etc/ccnsm2.properties"))
         val myip = prop.getProperty("myip")
-        println(myip)
+        val bro_home = prop.getProperty("bro_home")
+
+        CCNSM2Conf.myip = myip
+        CCNSM2Conf.bro_home = bro_home
     } catch {
         case e:Exception => {
             println(e.toString)
         }
     }
+    */
 
+    /*
     val conf = new SparkConf().setMaster("local").setAppName("cc-nsm")
     val sc = new SparkContext(conf)
+    */
 
     val defaultRoute =
         pathSingleSlash {
@@ -61,10 +68,11 @@ trait CCNSM2Service extends HttpService {
              parameter("proto")  { proto =>
                 respondWithMediaType(`text/html`) {
                     complete {
+                        var buffer = ""
                         proto match {
                             case "tcp" => {
-                                val dc = new DataCurrConnTcp(sc)
-                                println("HeyHey")
+                                val dc = new DataCurrConnTcp()
+
                             }
                             case _ => {
                                 println("default")
