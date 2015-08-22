@@ -19,7 +19,7 @@ class ViewCurrConn (is_error : Boolean, msg_error : String,
     buffer += curr_dt_str
 
     buffer += "<br/>"
-    buffer += "<h2>最新のネットワーク接続</h2>"
+    buffer += "<h2>最新のネットワーク接続 (%s)</h2>".format(proto.toUpperCase)
     buffer += "<br/>"
 
     if (is_error) {
@@ -85,9 +85,9 @@ class ViewCurrConn (is_error : Boolean, msg_error : String,
                 lbuffer += "<td>" + dt.toString("HH:mm:ss.SSS MM/dd")
                 // lbuffer += "<td>" + tokens(1)
                 lbuffer += "<td>" + tokens(2)
-                lbuffer += "<td>" + tokens(3)
+                lbuffer += """<td align="center">""" + tokens(3)
                 lbuffer += "<td>" + tokens(4)
-                lbuffer += "<td>" + tokens(5)
+                lbuffer += """<td align="center">""" + tokens(5)
                 lbuffer += """<td align="center">""" + tokens(6) // protocol
             }
         }

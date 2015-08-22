@@ -35,6 +35,7 @@ class DataCurrConn (proto : String) extends DataBasic { // sc : SparkContext) {
         var rdd : RDD[Array[String]] = null
         proto match {
             case "tcp" => { rdd = rdd_all.filter(_(6) == "tcp").sortBy( { x => x(0) }, false) }
+            case "udp" => { rdd = rdd_all.filter(_(6) == "udp").sortBy( { x => x(0) }, false) }
         }
 
         println("cc-info >> filter applied for protocol specific")
