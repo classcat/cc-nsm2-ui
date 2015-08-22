@@ -33,8 +33,8 @@ object Boot extends App {
         MyConfig.bro_home = bro_home
 
     } catch {
-        case e:Exception => {
-            println("Unexpected Error >> %s".format(e.toString))
+        case ex:Exception => {
+            println("Unexpected Error >> %s".format(ex.toString))
             sys.exit (-1)
         }
     }
@@ -45,8 +45,8 @@ object Boot extends App {
 
         GData.sc = sc
     } catch {
-        case e:Exception => {
-            println("Unexpected Error >> %s".format(e.toString))
+        case ex:Exception => {
+            println("Unexpected Error >> %s".format(ex.toString))
             sys.exit (-1)
         }
     }

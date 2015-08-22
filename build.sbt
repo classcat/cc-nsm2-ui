@@ -52,7 +52,9 @@ libraryDependencies ++= {
     "com.typesafe.akka"   %%  "akka-testkit"  % akkaV   % "test",
     "org.specs2"          %%  "specs2-core"   % "2.3.7" % "test",
     "org.apache.spark"   %%  "spark-core"             % sparkVersion,
-    "org.apache.spark"   %%  "spark-sql"              % sparkVersion
+    "org.apache.spark"   %%  "spark-sql"              % sparkVersion,
+    "joda-time" % "joda-time" % "2.8.1",
+    "org.joda" % "joda-convert" % "1.7"
   )
 }
 

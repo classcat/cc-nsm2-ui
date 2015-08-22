@@ -7,6 +7,7 @@ import MediaTypes._
 
 import org.apache.spark._
 import org.apache.spark.SparkContext._
+import org.apache.spark.rdd.RDD
 
 import com.classcat.ccnsm2._
 
@@ -70,12 +71,23 @@ trait CCNSM2Service extends HttpService {
                     complete {
                         var buffer = ""
                         proto match {
-                            case "tcp" => {
-                                val dc = new DataCurrConnTcp()
+                            case "icmp" => {
+                                // val dc = new DataCurrConnIcmp()
+
 
                             }
                             case _ => {
-                                println("default")
+                                val dc = new DataCurrConn(proto)
+
+                                val (is_error, msg_error) = dc.getError
+
+                                val rdd_incoming : RDD[Array[String]] = dc.getRddIncoming
+                                val rdd_outgoing : RDD[Array[String]] = dc.getRddOutgoing
+                                val rdd_others : RDD[Array[String]] = dc.getRddOthers
+
+                                val view = new ViewCurrConn(is_error, msg_error, proto,
+                                    rdd_incoming, rdd_outgoing, rdd_others)
+                                buffer = view.getHtml
                             }
                         }
                         val meta_refresh = """<meta http-equiv="refresh" content="90" />"""
