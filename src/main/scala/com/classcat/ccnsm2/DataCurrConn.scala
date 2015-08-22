@@ -15,6 +15,12 @@ class DataCurrConn (proto : String) extends DataBasic { // sc : SparkContext) {
     private var rdd_outgoing : RDD[Array[String]] = _
     private var rdd_others : RDD[Array[String]] = _
 
+    private var rdd_incoming_group_by_orig_h : RDD[(String, Int)] = _
+    private var rdd_outgoing_group_by_resp_h : RDD[(String, Int)] = _
+
+    private var rdd_incoming_group_by_resp_p : RDD[(String, Int)] = _
+    private var rdd_outgoing_group_by_resp_p : RDD[(String, Int)] = _
+
     try {
         val log_file : String = "file://%s/current/conn.log".format(bro_logs)
 
@@ -44,6 +50,14 @@ class DataCurrConn (proto : String) extends DataBasic { // sc : SparkContext) {
         rdd_outgoing = rdd.filter( { x =>  x(2) == MyConfig.myip } )
         rdd_others = rdd.filter( { x => (x(2) != MyConfig.myip) && (x(4) != MyConfig.myip) } )
 
+        rdd_incoming_group_by_orig_h = rdd_incoming.groupBy({ x => x(2)}).map( x => {(x._1, x._2.toArray.length)}).sortBy( { x => x._2 }, false)
+
+        rdd_outgoing_group_by_resp_h = rdd_outgoing.groupBy({ x => x(4)}).map( x => {(x._1, x._2.toArray.length)}).sortBy( { x => x._2 }, false)
+
+        rdd_incoming_group_by_resp_p = rdd_incoming.groupBy({ x => x(5)}).map( x => {(x._1, x._2.toArray.length)}).sortBy( { x => x._2 }, false)
+
+        rdd_outgoing_group_by_resp_p = rdd_outgoing.groupBy({ x => x(5)}).map( x => {(x._1, x._2.toArray.length)}).sortBy( { x => x._2 }, false)
+
     } catch {
         case ex : Exception  => {
             is_error = true
@@ -67,6 +81,22 @@ class DataCurrConn (proto : String) extends DataBasic { // sc : SparkContext) {
 
     def getRddOthers () : RDD[Array[String]] = {
         return rdd_others
+    }
+
+    def getRddIncomingGroupByOrigH () : RDD[(String, Int)] = {
+        return rdd_incoming_group_by_orig_h
+    }
+
+    def getRddOutgoingGroupByRespH () : RDD[(String, Int)] = {
+        return rdd_outgoing_group_by_resp_h
+    }
+
+    def getRddIncomingGroupByRespP () : RDD[(String, Int)] = {
+        return rdd_incoming_group_by_resp_p
+    }
+
+    def getRddOutgoingGroupByRespP () : RDD[(String, Int)] = {
+        return rdd_outgoing_group_by_resp_p
     }
 
 }
