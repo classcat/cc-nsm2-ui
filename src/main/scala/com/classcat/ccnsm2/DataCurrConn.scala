@@ -10,6 +10,12 @@ import java.io.{PrintWriter, StringWriter}
 // import com.classcat.ccnsm2.CCConfig
 
 class DataCurrConn (proto : String) extends DataBasic { // sc : SparkContext) {
+    private val log_file : String = "%s/current/conn.log".format(bro_logs)
+    // val log_file : String = "hdfs://localhost:9000/bro/logs/current/conn.log"
+    // val log_file : String = "file://%s/current/conn.log".format(bro_logs)
+    def getLogFileName : String = {
+        return log_file
+    }
 
     private var rdd_incoming : RDD[Array[String]] = _
     private var rdd_outgoing : RDD[Array[String]] = _
@@ -22,8 +28,6 @@ class DataCurrConn (proto : String) extends DataBasic { // sc : SparkContext) {
     private var rdd_outgoing_group_by_resp_p : RDD[(String, Int)] = _
 
     try {
-        val log_file : String = "file://%s/current/conn.log".format(bro_logs)
-
         val rdd_raw : RDD[String] = sc.textFile(log_file).cache()
 
         println ("cc-info >> log file %s loaded".format(log_file))

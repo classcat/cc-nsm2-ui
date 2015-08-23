@@ -26,11 +26,11 @@ object Boot extends App {
 
         val myip = prop.getProperty("myip")
         val port = prop.getProperty("port")
-        val bro_home = prop.getProperty("bro_home")
+        val bro_logs = prop.getProperty("bro_logs")
 
         MyConfig.myip = myip
         MyConfig.port_n = port.toInt
-        MyConfig.bro_home = bro_home
+        MyConfig.bro_logs = bro_logs
 
     } catch {
         case ex:Exception => {

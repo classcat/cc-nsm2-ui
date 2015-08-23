@@ -81,6 +81,8 @@ trait CCNSM2Service extends HttpService {
 
                                 val (is_error, msg_error) = dc.getError
 
+                                val log_file = dc.getLogFileName
+
                                 val rdd_incoming : RDD[Array[String]] = dc.getRddIncoming
                                 val rdd_outgoing : RDD[Array[String]] = dc.getRddOutgoing
                                 val rdd_others : RDD[Array[String]] = dc.getRddOthers
@@ -91,7 +93,7 @@ trait CCNSM2Service extends HttpService {
                                 val  rdd_incoming_group_by_resp_p : RDD[(String, Int)] = dc.getRddIncomingGroupByRespP
                                 val  rdd_outgoing_group_by_resp_p : RDD[(String, Int)] = dc.getRddOutgoingGroupByRespP
 
-                                val view = new ViewCurrConn(is_error, msg_error, proto,
+                                val view = new ViewCurrConn(is_error, msg_error, log_file, proto,
                                     rdd_incoming, rdd_outgoing, rdd_others,
                                     rdd_incoming_group_by_orig_h, rdd_outgoing_group_by_resp_h,
                                     rdd_incoming_group_by_resp_p, rdd_outgoing_group_by_resp_p

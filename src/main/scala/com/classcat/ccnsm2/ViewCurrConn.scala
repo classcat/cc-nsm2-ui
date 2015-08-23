@@ -11,6 +11,7 @@ import org.joda.time.format.DateTimeFormat
 import java.net.InetAddress
 
 class ViewCurrConn (is_error : Boolean, msg_error : String,
+                                        log_file : String,
                                         proto : String,
                                         rdd_incoming : RDD[Array[String]],
                                         rdd_outgoing : RDD[Array[String]],
@@ -23,6 +24,8 @@ class ViewCurrConn (is_error : Boolean, msg_error : String,
 {
 
     buffer += curr_dt_str
+
+    buffer += "<div><b>ログファイル</b> : %s</div>".format(log_file)
 
     buffer += "<br/>"
     buffer += "<h2>最新のネットワーク接続 (%s)</h2>".format(proto.toUpperCase)
